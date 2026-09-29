@@ -6,7 +6,7 @@ from dataclasses import dataclass
 @dataclass
 class PhysicsSettings:
     gravity: float = 0.2
-    friction: float = 1.0  # Added missing attribute
+    friction: float = 1.0
     restitution: float = 1.0
     sub_steps: int = 8
     screen_width: int = 1000
@@ -15,10 +15,22 @@ class PhysicsSettings:
     SCREEN_WIDTH: int = 1000
     SCREEN_HEIGHT: int = 1000
 
+# Only edit these if you know what you are doing!
+
 settings = PhysicsSettings()
 
-class Ring():
+game_objects = []
+
+class GameObject:
+    def __init__(self):
+        game_objects.append(self)
+
+    def draw(self, surface: pygame.Surface):
+        pass
+
+class Ring(GameObject):
     def __init__(self, radius=(settings.SCREEN_WIDTH / 2), width=5, color: pygame.Color = pygame.Color('white')):
+        super().__init__()
         self.radius = radius
         self.width = width
         self.color = color
@@ -29,15 +41,15 @@ class Ring():
         if self.radius > self.width:
             pygame.draw.circle(surface, self.color, (int(self.x), int(self.y)), int(self.radius), self.width)
 
-class Ball():
+class Ball(GameObject):
     def __init__(self, radius=20, x=0, y=0, vx=0, vy=0, color: pygame.Color = pygame.Color('red')):
+        super().__init__()
         self.x = float(x)
         self.y = float(y)
         self.radius = radius
         self.vx = float(vx)
         self.vy = float(vy)
         self.color = color
-        
         self.mass = math.pi * (radius ** 2)
 
     def move(self, dt):
@@ -95,3 +107,24 @@ class Ball():
                 self.vy -= (1 + settings.restitution) * dot_product * ny
     def draw(self, surface: pygame.Surface):
         pygame.draw.circle(surface, self.color, (int(self.x), int(self.y)), self.radius)
+
+
+def DrawAll(surface: pygame.Surface, *groups):
+    if not groups:
+        groups = (game_objects,)
+
+    for group in groups:
+        if group is None:
+            continue
+
+        if hasattr(group, "draw"):
+            group.draw(surface)
+            continue
+
+        for obj in group:
+            if hasattr(obj, "draw"):
+                obj.draw(surface)
+            elif isinstance(obj, (list, tuple, set)):
+                for nested_obj in obj:
+                    if hasattr(nested_obj, "draw"):
+                        nested_obj.draw(surface)

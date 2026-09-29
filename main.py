@@ -39,11 +39,6 @@ def update():
             ball.move(dt)
         check_collisions()
 
-    for ring in rings:
-        ring.draw(screen)
-    for ball in balls:
-        ball.draw(screen)
-
 running = True
 while running:
     for event in pygame.event.get():
@@ -52,6 +47,7 @@ while running:
 
     screen.fill(pygame.Color('black'))
     update()
+    library.DrawAll(screen)
     pygame.display.flip()
     clock.tick(FPS)
 
