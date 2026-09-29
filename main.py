@@ -1,63 +1,27 @@
 import pygame
-import math
-import library
+import engine.objects as objects
+import engine.physics as physics
+import mods.builtin.effects as effects
+
+# To add a mod type in "import mods.builtin.effects" for example to add the effects mod,
+# add a mod to custom, if it is your own, and type import mods.custom.modname
 
 pygame.init()
 
-settings = library.PhysicsSettings()
-
-SCREEN_WIDTH = SCREEN_HEIGHT = settings.SCREEN_WIDTH
-FPS = settings.fps
-
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-clock = pygame.time.Clock()
-
-Ring = library.Ring
-Ball = library.Ball
-balls = library.balls
-rings = library.rings
+settings = objects.PhysicsSettings()
+Ring = objects.Ring
+Ball = objects.Ball
+TrailBall = effects.TrailBall
 
 # Edit these to add balls and stuff in between these comments.
 
-Ball(radius=20, x=450, y=400, vx=6, vy=0, color=pygame.Color('red'), hasTrail=True, trailFade=50)
+TrailBall(radius=20, x=450, y=400, vx=6, vy=0, color=pygame.Color('red'), trailFade=50)
 Ball(radius=35, x=550, y=400, vx=-4, vy=2, color=pygame.Color('blue'))
 Ball(radius=15, x=500, y=300, vx=2, vy=-5, color=pygame.Color('green'))
+TrailBall(radius=50, x=500, y=400, vx=0, vy=0, color=pygame.Color('purple'), trailFade=20)
 
 Ring(radius=450, width=5, color=pygame.Color('white'))
 
-# Only edit if you know what you are doing!
+# Start simulation!
 
-def check_collisions():
-    for i in range(len(balls)):
-        for j in range(i + 1, len(balls)):
-            balls[i].collide_with_ball(balls[j])
-
-    for ball in balls:
-        for ring in rings:
-            ball.collide_with_ring(ring)
-
-def update():
-    SUB_STEPS = 8
-    dt = 1.0 / SUB_STEPS
-
-    for ball in balls:
-        ball.spawn_trail()
-    
-    for _ in range(SUB_STEPS):
-        for ball in balls:
-            ball.move(dt)
-        check_collisions()
-
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    screen.fill(pygame.Color('black'))
-    update()
-    library.DrawAll(screen)
-    pygame.display.flip()
-    clock.tick(FPS)
-
-pygame.quit()
+physics.start_sim()
