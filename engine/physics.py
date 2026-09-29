@@ -1,9 +1,14 @@
+import sys
 from engine.objects import *
+from engine.hooks import update_hooks
+
 
 def update():
     dt = 1.0 / settings.sub_steps
 
     for _ in range(settings.sub_steps):
+        for hook in update_hooks:
+            hook()
         for ball in balls:
             ball.move(dt)
         check_collisions()

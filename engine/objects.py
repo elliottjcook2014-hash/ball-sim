@@ -1,6 +1,8 @@
+import sys
 import pygame
 import math
 from dataclasses import dataclass
+
 
 @dataclass
 class PhysicsSettings:

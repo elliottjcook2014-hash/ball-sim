@@ -1,5 +1,7 @@
+import sys
 from engine.objects import *
 import pygame
+
 
 class Trail(GameObject):
     def __init__(self, x, y, radius, color, fade_rate=10):
@@ -46,3 +48,5 @@ class TrailBall(Ball):
         self.x += self.vx * dt
         self.y += self.vy * dt
         Trail(self.x, self.y, self.radius, self.color, fade_rate=self.trailFade)
+
+
