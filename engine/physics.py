@@ -7,7 +7,7 @@ def update():
     dt = 1.0 / settings.sub_steps
 
     for _ in range(settings.sub_steps):
-        for hook in update_hooks:
+        for hook in update_hooks: # this runs functions you put into update_hooks
             hook()
         for ball in balls:
             ball.move(dt)
