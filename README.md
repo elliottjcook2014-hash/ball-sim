@@ -4,8 +4,11 @@ This is a Pygame ball simulation and game engine, it is very featureful and it h
 If you have any updates or anything you want to add (like optimise the engine, add a new built in mod) then you can just make a pull request!
 ## Installation
 1. Open Git Bash
-2. Run ``` git clone https://github.com/elliottjcook2014-hash/ball-sim/ ```
-3. Run ``` ./setup.sh```
+2. Run ``` git clone https://github.com/elliottjcook2014-hash/ball-sim/ ``` (to copy this code over to yours)
+3. Run ``` cd ball-sim ``` (to go into the ball simulation folder)
+4. Run ``` python -m venv .venv ``` (to create a virtual enviroment to install packages)
+5. Run ```source .venv/Scripts/activate```
+6. Run ```pip install -r requirements.txt```
 ## How to create a mod
 To create a mod, create a new Python file in mods/custom/.
 
