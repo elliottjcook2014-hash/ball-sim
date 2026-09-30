@@ -1,7 +1,11 @@
 # The ball sim
-## How to use
+## Overview
 This is a Pygame ball simulation and game engine, it is very featureful and it has a modding interface, its very fun to play with and it is somewhat realistic.
 If you have any updates or anything you want to add (like optimise the engine, add a new built in mod) then you can just make a pull request!
+## Installation
+1. Open Git Bash (I can install it for you)
+2. Run ```bash git clone https://github.com/elliottjcook2014-hash/ball-sim/ ```
+3. Run ```bash ./setup.sh```
 ## How to create a mod
 To create a mod, create a new Python file in mods/custom/.
 
